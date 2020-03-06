@@ -1,0 +1,13 @@
+[
+  {
+    "name": "plugin-message-timer",
+    "version": "0.0.0",
+    "class": "MessageTimerPlugin",
+    "requires": [
+      {
+        "@twilio/flex-ui": "^1"
+      }
+    ],
+    "src": "http://localhost:3012/plugin-message-timer.js"
+  }
+]
