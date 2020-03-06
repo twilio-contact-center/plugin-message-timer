@@ -57,7 +57,12 @@ export default class MessageTimer extends React.Component {
       let timeSinceLastInboundMin = Math.floor((this.state.timeSinceLastInbound - timeSinceLastInboundHrs * (60 * 60)) / 60);
       let timeSinceLastInboundSec = this.state.timeSinceLastInbound - (timeSinceLastInboundMin * 60) - (timeSinceLastInboundHrs * 60 * 60)
 
-      return <div style={style}>{timeSinceLastInboundHrs.toString().padStart(2, "0")}:{timeSinceLastInboundMin.toString().padStart(2, "0")}:{timeSinceLastInboundSec.toString().padStart(2, "0")}</div>
+      let hrsString = timeSinceLastInboundHrs > 0 ? timeSinceLastInboundHrs.toString().padStart(2, "0") + ":" : ""
+      let minString = timeSinceLastInboundMin > 0 ? timeSinceLastInboundMin.toString().padStart(2, "0") + ":" : ""
+      let secString = timeSinceLastInboundSec.toString().padStart(2, "0")
+      let endString = timeSinceLastInboundMin > 0 ? "" : "s"
+
+      return <div style={style}>{hrsString}{minString}{secString}{endString}</div>
     } else {
       return ""
     }
