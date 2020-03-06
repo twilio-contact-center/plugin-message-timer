@@ -13,6 +13,15 @@ export default class MessageTimer extends React.Component {
     this.timer = setInterval(this.setTimeSinceLastInbound.bind(this), 1000);
   }
 
+  componentDidUpdate(prevProps, prevState, snapshop) {
+    let newChatChannel = !prevProps.chatChannel && this.props.chatChannel;
+    let lostChatChannel = prevProps.chatChannel && !this.props.chatChannel;
+    let changedChatChannel = prevProps.chatChannel && this.props.chatChannel && this.props.chatChannel.messages.length !== prevProps.chatChannel.messages.length
+    if (newChatChannel || lostChatChannel || changedChatChannel) {
+      this.setTimeSinceLastInbound();
+    }
+  }
+
   componentWillUnmount() {
     if (this.timer) {
       clearInterval(this.timer);
@@ -20,6 +29,9 @@ export default class MessageTimer extends React.Component {
   }
 
   getTimeSinceLastInbound() {
+    if (!this.props.chatChannel) {
+      return undefined
+    }
     let inboundMessages = this.props.chatChannel.messages.filter((message) => {
       return message.isFromMe === false;
     });
@@ -37,14 +49,7 @@ export default class MessageTimer extends React.Component {
     if (this.state.timeSinceLastInbound !== timeSinceLastInbound) {
       this.setState({
         timeSinceLastInbound: timeSinceLastInbound
-      }, () => {
-      })
-    }
-  }
-
-  componentDidUpdate(prevProps, prevState, snapshop) {
-    if (this.props.chatChannel.messages.length !== prevProps.chatChannel.messages.length) {
-      this.setTimeSinceLastInbound();
+      });
     }
   }
 
