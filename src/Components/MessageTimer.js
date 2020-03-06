@@ -13,6 +13,12 @@ export default class MessageTimer extends React.Component {
     this.timer = setInterval(this.setTimeSinceLastInbound.bind(this), 1000);
   }
 
+  componentWillUnmount() {
+    if (this.timer) {
+      clearInterval(this.timer);
+    }
+  }
+
   getTimeSinceLastInbound() {
     let inboundMessages = this.props.chatChannel.messages.filter((message) => {
       return message.isFromMe === false;
