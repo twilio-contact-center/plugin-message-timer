@@ -49,7 +49,7 @@ export default class MessageTimer extends React.Component {
         fontSize: "12px",
       }
 
-      if (this.state.timeSinceLastInbound > 60) {
+      if (this.state.timeSinceLastInbound >= 60) {
         style.color = "red";
       }
 
